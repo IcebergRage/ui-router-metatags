@@ -31,6 +31,7 @@ function configure($urlRouterProvider, $stateProvider, UIRouterMetatagsProvider)
                 title: 'Frontpage',
                 description: 'This is the frontpage',
                 keywords: 'lots of interresting keywords',
+				canonical: 'http://example.com/',
                 properties: {
                     'og:title': 'Frontpage'
                 }

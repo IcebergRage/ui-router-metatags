@@ -7,6 +7,7 @@ declare namespace uiroutermetatags {
         description?: string | Function;
         keywords?: string | Function;
         robots?: string | Function;
+        canonical?: string | Function;
         properties?: {
             [index: string]: string | Function;
         };

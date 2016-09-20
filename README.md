@@ -41,6 +41,7 @@ Add the tags to your index file
 <title ng-bind="MetaTags.title">Default title</title>
 <meta name="description" content="{{MetaTags.description}}">
 <meta name="keywords" content="{{MetaTags.keywords}}">
+<link rel="canonical" href="{{MetaTags.canonical}}" ng-if="MetaTags.canonical"/>
 <meta ng-repeat="(key, value) in MetaTags.properties" property="{{key}}" content="{{value}}" >
 <meta name="prerender-status-code" content="{{MetaTags.prerender.statusCode}}">
 <meta name="prerender-header" ng-if="MetaTags.prerender.header" content="{{MetaTags.prerender.header}}">
@@ -83,7 +84,8 @@ function configureRoutes($stateProvider) {
                 keywords: 'lots of interresting keywords',
                 properties: {
                     'og:title': 'Frontpage'
-                }
+                },
+                canonical: 'http://example.com/'
             }
         })
         .state('blogposts', {

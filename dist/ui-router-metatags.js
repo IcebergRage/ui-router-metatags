@@ -62,7 +62,7 @@ var uiroutermetatags;
             };
         };
         return UIRouterMetatags;
-    })();
+    }());
     appModule.provider('UIRouterMetatags', UIRouterMetatags);
     var MetaTags = (function () {
         /* @ngInject */
@@ -89,6 +89,7 @@ var uiroutermetatags;
                     this.description = tags.description ? this.getValue('description', tags.description) : this.UIRouterMetatags.defaultDescription;
                     this.keywords = tags.keywords ? this.getValue('keywords', tags.keywords) : this.UIRouterMetatags.defaultKeywords;
                     this.robots = tags.robots ? this.getValue('robots', tags.robots) : this.UIRouterMetatags.defaultRobots;
+                    this.canonical = tags.canonical ? this.getValue('canonical', tags.canonical) : '';
                     angular.forEach(tags.properties, function (value, key) {
                         var v = _this.getValue(key, value);
                         if (v) {
@@ -101,6 +102,7 @@ var uiroutermetatags;
                     this.description = this.UIRouterMetatags.defaultDescription;
                     this.keywords = this.UIRouterMetatags.defaultKeywords;
                     this.robots = this.UIRouterMetatags.defaultRobots;
+                    this.canonical = '';
                 }
                 if (tags && tags.prerender) {
                     this.prerender.statusCode = tags.prerender.statusCode ? this.getValue('prerender.statusCode', tags.prerender.statusCode) : 200;
@@ -140,7 +142,7 @@ var uiroutermetatags;
             }
         };
         return MetaTags;
-    })();
+    }());
     appModule.service('MetaTags', MetaTags);
     /* @ngInject */
     function runBlock($log, $rootScope, MetaTags, $window) {

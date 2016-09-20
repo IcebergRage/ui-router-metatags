@@ -9,6 +9,7 @@ namespace uiroutermetatags {
 		description?: string | Function;
 		keywords?: string | Function;
 		robots?: string | Function;
+		canonical?: string | Function;
 		properties?: {
 			[index: string]: string | Function;
 		},
@@ -123,6 +124,7 @@ namespace uiroutermetatags {
 		keywords: string;
 		description: string;
 		robots: string;
+		canonical: string;
 		properties: {};
 		prerender: uiroutermetatags.Prerender = {};
 		
@@ -143,6 +145,7 @@ namespace uiroutermetatags {
 					this.description = tags.description ? this.getValue('description', tags.description) : this.UIRouterMetatags.defaultDescription;
 					this.keywords = tags.keywords ? this.getValue('keywords', tags.keywords) : this.UIRouterMetatags.defaultKeywords;
 					this.robots = tags.robots ? this.getValue('robots', tags.robots) : this.UIRouterMetatags.defaultRobots;
+					this.canonical = tags.canonical ? this.getValue('canonical', tags.canonical) : '';
 					angular.forEach(tags.properties, (value, key) => {
 						var v = this.getValue(key, value);
 						if (v) {
@@ -154,6 +157,7 @@ namespace uiroutermetatags {
 					this.description = this.UIRouterMetatags.defaultDescription;
 					this.keywords = this.UIRouterMetatags.defaultKeywords;
 					this.robots = this.UIRouterMetatags.defaultRobots;
+					this.canonical = '';
 				}
 				if (tags && tags.prerender) {
 					this.prerender.statusCode = tags.prerender.statusCode ? this.getValue('prerender.statusCode', tags.prerender.statusCode) : 200;
