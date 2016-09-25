@@ -166,7 +166,7 @@ namespace uiroutermetatags {
 					this.prerender.statusCode = 200;
 					this.prerender.header = null;
 				}
-
+				this.$window.document.title = this.title;
 				this.$window.prerenderReady = true;
 			} catch (err) {
 				this.$log.error('error occured when extracting metatags:', err);

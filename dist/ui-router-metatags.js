@@ -112,6 +112,7 @@ var uiroutermetatags;
                     this.prerender.statusCode = 200;
                     this.prerender.header = null;
                 }
+                this.$window.document.title = this.title;
                 this.$window.prerenderReady = true;
             }
             catch (err) {
