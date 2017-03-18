@@ -170,10 +170,16 @@ namespace uiroutermetatags {
 					this.keywords = tags.keywords ? this.getValue('keywords', tags.keywords) : this.UIRouterMetatags.defaultKeywords;
 					this.robots = tags.robots ? this.getValue('robots', tags.robots) : this.UIRouterMetatags.defaultRobots;
 					this.canonical = tags.canonical ? this.getValue('canonical', tags.canonical) : '';
-					angular.forEach(tags.properties, (value, key) => {
+          angular.forEach(tags.properties, (value, key) => {
 						var v = this.getValue(key, value);
 						if (v) {
 							this.properties[key] = v;
+						}
+					});
+					angular.forEach(tags.twitter, (value, key) => {
+						var v = this.getValue(key, value);
+						if (v) {
+							this.twitter[key] = v;
 						}
 					});
 				} else {

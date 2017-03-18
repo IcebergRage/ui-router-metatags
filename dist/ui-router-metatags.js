@@ -112,6 +112,12 @@ var uiroutermetatags;
                             _this.properties[key] = v;
                         }
                     });
+                    angular.forEach(tags.twitter, function (value, key) {
+                        var v = _this.getValue(key, value);
+                        if (v) {
+                            _this.twitter[key] = v;
+                        }
+                    });
                 }
                 else {
                     this.title = this.UIRouterMetatags.defaultTitle;
