@@ -15,7 +15,9 @@ var uiroutermetatags;
             this.defaultKeywords = '';
             this.defaultRobots = '';
             this.staticProperties = {};
+            this.defaultTwitter = {};
             this.enableOGURL = false;
+            this.enableTWURL = false;
         }
         UIRouterMetatags.prototype.setTitlePrefix = function (prefix) {
             this.prefix = prefix;
@@ -45,8 +47,16 @@ var uiroutermetatags;
             this.staticProperties = properties;
             return this;
         };
+        UIRouterMetatags.prototype.setDefaultTwitter = function (twitter) {
+            this.defaultTwitter = twitter;
+            return this;
+        };
         UIRouterMetatags.prototype.setOGURL = function (enabled) {
             this.enableOGURL = enabled;
+            return this;
+        };
+        UIRouterMetatags.prototype.setTWURL = function (enabled) {
+            this.enableTWURL = enabled;
             return this;
         };
         UIRouterMetatags.prototype.$get = function () {
@@ -57,8 +67,10 @@ var uiroutermetatags;
                 defaultDescription: this.defaultDescription,
                 defaultKeywords: this.defaultKeywords,
                 defaultRobots: this.defaultRobots,
+                defaultTwitter: this.defaultTwitter,
                 staticProperties: this.staticProperties,
-                enableOGURL: this.enableOGURL
+                enableOGURL: this.enableOGURL,
+                enableTWURL: this.enableTWURL
             };
         };
         return UIRouterMetatags;
@@ -81,8 +93,12 @@ var uiroutermetatags;
             var _this = this;
             try {
                 this.properties = angular.extend({}, this.UIRouterMetatags.staticProperties);
+                this.twitter = angular.extend({}, this.UIRouterMetatags.defaultTwitter);
                 if (this.UIRouterMetatags.enableOGURL) {
                     this.properties['og:url'] = this.$location.absUrl();
+                }
+                if (this.UIRouterMetatags.enableTWURL) {
+                    this.twitter['url'] = this.$location.absUrl();
                 }
                 if (tags) {
                     this.title = tags.title ? this.UIRouterMetatags.prefix + (this.getValue('title', tags.title) || '') + this.UIRouterMetatags.suffix : this.UIRouterMetatags.defaultTitle;

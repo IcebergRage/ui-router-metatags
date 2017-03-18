@@ -28,8 +28,10 @@ namespace uiroutermetatags {
 		setDefaultDescription(description: string): IProvider;
 		setDefaultKeywords(keywords: string): IProvider;
 		setDefaultRobots(robots: string): IProvider;
-		setStaticProperties(properties: {}): IProvider;
-		setOGURL(enabled: boolean): IProvider;
+    setStaticProperties(properties: {}): IProvider;
+    setDefaultTwitter(properties: {}): IProvider;
+    setOGURL(enabled: boolean): IProvider;
+    setTWURL(enabled: boolean): IProvider;
 	}
 
 	export interface IService {
@@ -41,11 +43,13 @@ namespace uiroutermetatags {
 		prefix: string;
 		suffix: string;
 		defaultTitle: string;
-		defaultDescription: string;
+    defaultDescription: string;
+    defaultTwitter: {},
 		defaultKeywords: string;
 		defaultRobots: string;
 		staticProperties: {};
-		enableOGURL: boolean;
+    enableOGURL: boolean;
+    enableTWURL: boolean;
 	}
 
 	class UIRouterMetatags implements angular.IServiceProvider, uiroutermetatags.IProvider {
@@ -56,7 +60,9 @@ namespace uiroutermetatags {
 		defaultKeywords: string = '';
 		defaultRobots: string = '';
 		staticProperties: {} = {};
+    defaultTwitter: {} = {};
 		enableOGURL: boolean = false;
+    enableTWURL: boolean = false;
 
 		/* @ngInject */
 		constructor() {
@@ -98,10 +104,20 @@ namespace uiroutermetatags {
 			return this;
 		}
 
+    setDefaultTwitter(twitter: {}): UIRouterMetatags {
+			this.defaultTwitter = twitter;
+			return this;
+		}
+
 		setOGURL(enabled: boolean): UIRouterMetatags {
 			this.enableOGURL = enabled;
 			return this;
 		}
+
+    setTWURL(enabled: boolean): UIRouterMetatags {
+      this.enableTWURL = enabled;
+      return this;
+    }
 
 		public $get(): uiroutermetatags.IConfig {
 			return {
@@ -111,8 +127,10 @@ namespace uiroutermetatags {
 				defaultDescription: this.defaultDescription,
 				defaultKeywords: this.defaultKeywords,
 				defaultRobots: this.defaultRobots,
+        defaultTwitter: this.defaultTwitter,
 				staticProperties: this.staticProperties,
-				enableOGURL: this.enableOGURL
+        enableOGURL: this.enableOGURL,
+        enableTWURL: this.enableTWURL
 			}
 		}
 	}
@@ -125,20 +143,26 @@ namespace uiroutermetatags {
 		description: string;
 		robots: string;
 		canonical: string;
+    twitter: {};
 		properties: {};
 		prerender: uiroutermetatags.Prerender = {};
-		
+
 		/* @ngInject */
 		constructor(public $log: angular.ILogService, public UIRouterMetatags: uiroutermetatags.IConfig, public $interpolate: angular.IInterpolateService, public $injector: angular.auto.IInjectorService, public $state: any, public $location: angular.ILocationService, public $window) {
 		}
 
 		update(tags: uiroutermetatags.IMetaTags) {
 			try {
-				this.properties = angular.extend({}, this.UIRouterMetatags.staticProperties);
+        this.properties = angular.extend({}, this.UIRouterMetatags.staticProperties);
+        this.twitter = angular.extend({}, this.UIRouterMetatags.defaultTwitter);
 
 				if (this.UIRouterMetatags.enableOGURL) {
-					this.properties['og:url'] = this.$location.absUrl();
+          this.properties['og:url'] = this.$location.absUrl();
 				}
+
+        if (this.UIRouterMetatags.enableTWURL) {
+          this.twitter['url'] = this.$location.absUrl();
+        }
 
 				if (tags) {
 					this.title = tags.title ? this.UIRouterMetatags.prefix + (this.getValue('title', tags.title) || '') + this.UIRouterMetatags.suffix : this.UIRouterMetatags.defaultTitle;
@@ -194,7 +218,7 @@ namespace uiroutermetatags {
 	}
 
 	appModule.service('MetaTags', MetaTags);
-	
+
 	/* @ngInject */
 	function runBlock($log: angular.ILogService, $rootScope: any, MetaTags: uiroutermetatags.IService, $window: angular.IWindowService) {
 		$rootScope.MetaTags = MetaTags;

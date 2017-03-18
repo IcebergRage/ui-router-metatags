@@ -25,7 +25,9 @@ declare namespace uiroutermetatags {
         setDefaultKeywords(keywords: string): IProvider;
         setDefaultRobots(robots: string): IProvider;
         setStaticProperties(properties: {}): IProvider;
+        setDefaultTwitter(properties: {}): IProvider;
         setOGURL(enabled: boolean): IProvider;
+        setTWURL(enabled: boolean): IProvider;
     }
     interface IService {
         update(tags: IMetaTags): void;
@@ -36,10 +38,12 @@ declare namespace uiroutermetatags {
         suffix: string;
         defaultTitle: string;
         defaultDescription: string;
+        defaultTwitter: {};
         defaultKeywords: string;
         defaultRobots: string;
         staticProperties: {};
         enableOGURL: boolean;
+        enableTWURL: boolean;
     }
 }
 declare module angular.ui {
