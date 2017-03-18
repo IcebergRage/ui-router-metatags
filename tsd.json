@@ -1,7 +1,7 @@
 {
   "version": "v4",
   "repo": "borisyankov/DefinitelyTyped",
-  "ref": "master",
+  "ref": "upgrade-angular-1-6",
   "path": "typings",
   "bundle": "typings/tsd.d.ts",
   "installed": {
